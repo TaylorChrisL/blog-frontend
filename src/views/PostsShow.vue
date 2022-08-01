@@ -8,7 +8,7 @@ export default {
     };
   },
   created: function () {
-    axios.get("/posts/1.json").then((response) => {
+    axios.get("/posts/" + this.$route.params.id + ".json").then((response) => {
       this.post = response.data;
     });
   },
