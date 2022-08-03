@@ -4,6 +4,7 @@ export default {
   data: function () {
     return {
       posts: [],
+      currentPost: {},
     };
   },
   created: function () {
@@ -21,11 +22,16 @@ export default {
 </script>
 
 <template>
-  <div v-for="post in posts" v-bind:key="post.id">
+  <div
+    v-for="post in posts"
+    v-bind:key="post.id"
+    v-on:click="currentPost = post"
+    :class="{ selected: post === currentPost }"
+  >
     <router-link :to="`/posts/${post.id}`">
       <h1>{{ post.title }}</h1>
-      <img :src="post.image" alt="An Image" />
     </router-link>
+    <img :src="post.image" alt="An Image" />
     <p>
       {{ post.body }}
     </p>
@@ -37,5 +43,10 @@ export default {
 img {
   max-width: 200px;
   max-height: 300px;
+}
+.selected {
+  color: white;
+  background-color: maroon;
+  transition: background-color 2s ease;
 }
 </style>
