@@ -3,11 +3,19 @@ export default {
   data: function () {
     return {
       isLoggedIn: false,
+      flashMessage: "",
     };
+  },
+  methods: {
+    getUserId: function () {
+      return localStorage.getItem("user_id");
+    },
   },
   watch: {
     $route: function () {
       this.isLoggedIn = !!localStorage.jwt;
+      this.flashMessage = localStorage.getItem("flashMessage");
+      localStorage.removeItem("flashMessage");
     },
   },
 };
@@ -106,6 +114,7 @@ export default {
     |
     <router-link v-if="isLoggedIn" to="/logout">Log Out</router-link>
   </nav>
+  <div v-if="flashMessage" v-on:click="flashMessage = ''" class="alert alert-danger">{{ flashMessage }}</div>
   <router-view />
 </template>
 
